@@ -1,0 +1,16 @@
+#!/bin/sh
+cd ${0%/*} || exit 1
+
+. $WM_PROJECT_DIR/bin/tools/CleanFunctions
+
+cleanCase
+
+rm -rf VirtualMeshData
+rm -rf bodiesInfo
+rm -rf StlRecord
+
+rm -rf 0
+rm -f *.obj
+
+rm -f *.pyData                                                       
+rm -f pyVisMat/*      
