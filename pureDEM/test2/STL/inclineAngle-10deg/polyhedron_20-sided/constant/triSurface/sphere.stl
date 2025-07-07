@@ -1,0 +1,142 @@
+solid ExportedfromBlender-3.5.1
+ facet normal 0.187592 -0.577383 -0.794631
+  outer loop
+   vertex 0 0.01 -0.01
+   vertex 0.007236 0.004743 -0.004472
+   vertex -0.002764 0.001494 -0.004472
+  endloop
+ endfacet
+ facet normal 0.607075 0 -0.794645
+  outer loop
+   vertex 0.007236 0.004743 -0.004472
+   vertex 0 0.01 -0.01
+   vertex 0.007236 0.015257 -0.004472
+  endloop
+ endfacet
+ facet normal -0.49114 -0.356836 -0.794638
+  outer loop
+   vertex 0 0.01 -0.01
+   vertex -0.002764 0.001494 -0.004472
+   vertex -0.008944 0.01 -0.004472
+  endloop
+ endfacet
+ facet normal -0.49114 0.356836 -0.794638
+  outer loop
+   vertex 0 0.01 -0.01
+   vertex -0.008944 0.01 -0.004472
+   vertex -0.002764 0.018506 -0.004472
+  endloop
+ endfacet
+ facet normal 0.187592 0.577383 -0.794631
+  outer loop
+   vertex 0 0.01 -0.01
+   vertex -0.002764 0.018506 -0.004472
+   vertex 0.007236 0.015257 -0.004472
+  endloop
+ endfacet
+ facet normal 0.98225 0 -0.187576
+  outer loop
+   vertex 0.007236 0.004743 -0.004472
+   vertex 0.007236 0.015257 -0.004472
+   vertex 0.008944 0.01 0.004472
+  endloop
+ endfacet
+ facet normal 0.303514 -0.934178 -0.187592
+  outer loop
+   vertex -0.002764 0.001494 -0.004472
+   vertex 0.007236 0.004743 -0.004472
+   vertex 0.002764 0.001494 0.004472
+  endloop
+ endfacet
+ facet normal -0.794652 -0.577352 -0.187597
+  outer loop
+   vertex -0.008944 0.01 -0.004472
+   vertex -0.002764 0.001494 -0.004472
+   vertex -0.007236 0.004743 0.004472
+  endloop
+ endfacet
+ facet normal -0.794652 0.577352 -0.187597
+  outer loop
+   vertex -0.002764 0.018506 -0.004472
+   vertex -0.008944 0.01 -0.004472
+   vertex -0.007236 0.015257 0.004472
+  endloop
+ endfacet
+ facet normal 0.303514 0.934178 -0.187592
+  outer loop
+   vertex 0.007236 0.015257 -0.004472
+   vertex -0.002764 0.018506 -0.004472
+   vertex 0.002764 0.018506 0.004472
+  endloop
+ endfacet
+ facet normal 0.794652 -0.577352 0.187597
+  outer loop
+   vertex 0.007236 0.004743 -0.004472
+   vertex 0.008944 0.01 0.004472
+   vertex 0.002764 0.001494 0.004472
+  endloop
+ endfacet
+ facet normal -0.303514 -0.934178 0.187592
+  outer loop
+   vertex -0.002764 0.001494 -0.004472
+   vertex 0.002764 0.001494 0.004472
+   vertex -0.007236 0.004743 0.004472
+  endloop
+ endfacet
+ facet normal -0.98225 0 0.187576
+  outer loop
+   vertex -0.008944 0.01 -0.004472
+   vertex -0.007236 0.004743 0.004472
+   vertex -0.007236 0.015257 0.004472
+  endloop
+ endfacet
+ facet normal -0.303514 0.934178 0.187592
+  outer loop
+   vertex -0.002764 0.018506 -0.004472
+   vertex -0.007236 0.015257 0.004472
+   vertex 0.002764 0.018506 0.004472
+  endloop
+ endfacet
+ facet normal 0.794652 0.577352 0.187597
+  outer loop
+   vertex 0.007236 0.015257 -0.004472
+   vertex 0.002764 0.018506 0.004472
+   vertex 0.008944 0.01 0.004472
+  endloop
+ endfacet
+ facet normal 0.49114 -0.356836 0.794638
+  outer loop
+   vertex 0.002764 0.001494 0.004472
+   vertex 0.008944 0.01 0.004472
+   vertex 0 0.01 0.01
+  endloop
+ endfacet
+ facet normal -0.187592 -0.577383 0.794631
+  outer loop
+   vertex -0.007236 0.004743 0.004472
+   vertex 0.002764 0.001494 0.004472
+   vertex 0 0.01 0.01
+  endloop
+ endfacet
+ facet normal -0.607075 0 0.794645
+  outer loop
+   vertex -0.007236 0.015257 0.004472
+   vertex -0.007236 0.004743 0.004472
+   vertex 0 0.01 0.01
+  endloop
+ endfacet
+ facet normal -0.187592 0.577383 0.794631
+  outer loop
+   vertex 0.002764 0.018506 0.004472
+   vertex -0.007236 0.015257 0.004472
+   vertex 0 0.01 0.01
+  endloop
+ endfacet
+ facet normal 0.49114 0.356836 0.794638
+  outer loop
+   vertex 0.008944 0.01 0.004472
+   vertex 0.002764 0.018506 0.004472
+   vertex 0 0.01 0.01
+  endloop
+ endfacet
+endsolid ExportedfromBlender-3.5.1

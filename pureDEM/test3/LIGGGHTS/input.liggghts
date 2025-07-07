@@ -1,0 +1,348 @@
+###################################Header for General commands#######################################################
+
+atom_style	granular		#Simulation of particles
+
+boundary	f f f			#fixed boundaries -> particles will be deleted if leaving the simulation box
+
+units		si
+
+communicate	single vel yes	#default
+
+newton		off				#default
+
+###################################System variables##################################################################
+
+#Definition of boundaries
+variable xmin equal -0.05
+variable xmax equal 0.05
+
+variable ymin equal -0.01
+variable ymax equal 0.4
+
+variable zmin equal -0.05
+variable zmax equal 0.05
+
+#Definition of the timestep
+
+variable dt equal 1e-6			
+
+
+###################################Specific variables for current simulation#########################################
+
+variable natoms equal 2 	#1 -> particle #2->Box
+
+####variable for material properties####
+
+####Young Modulus####
+variable	youngmodulus1	equal 	1e8		#N/mm²
+variable	youngmodulus2	equal 	1e8		#N/mm²
+
+####Poission ratio####
+variable 	poission1	equal	0.0
+variable 	poission2	equal	0.0
+
+####variable for contact properties####
+
+####coefficient of restitution####
+variable	CoR11	equal	0.85
+variable	CoR12	equal	0.85
+variable	CoR21	equal	0.85
+variable	CoR22	equal	0.85
+
+####sliding friction coefficient####
+variable	sf11	equal	0
+variable	sf12	equal	0
+variable	sf21	equal	0
+variable	sf22	equal	0
+
+####rolling friction coefficient####
+variable	rf11	equal	0.0
+variable	rf12	equal	0.0
+variable	rf21	equal	0.0
+variable	rf22	equal	0.0
+
+
+####variable for particle####
+
+#Number of particle radius
+
+variable	density	equal	5000	#kg/m³
+
+
+####filling parameters####
+
+variable	runTime	equal 1	#seconds
+
+variable	runSteps	equal	${runTime}/${dt}		#Transform time to iteration steps
+
+###################################Definition of simulationbox#######################################################
+
+region		reg block ${xmin} ${xmax} ${ymin} ${ymax} ${zmin} ${zmax} units box
+
+create_box	2 reg
+
+neighbor	0.004 bin		#default
+
+neigh_modify	delay 0		#default
+
+#################################Definition of the contact models####################################################
+
+pair_style gran model hertz tangential history rolling_friction epsd2	#contact model
+
+pair_coeff	* *				#default
+
+timestep ${dt}
+
+fix		integrator all nve/sphere			#default
+
+fix		gravi all gravity 9.81 vector  0.0 -1 0.0 
+
+###################################Definition of Material properties#################################################
+
+
+fix 		m1 all property/global youngsModulus peratomtype ${youngmodulus1} ${youngmodulus2}
+
+fix 		m2 all property/global poissonsRatio peratomtype ${poission1} ${poission2}
+
+fix 		m3 all property/global coefficientRestitution peratomtypepair ${natoms} ${CoR11} ${CoR12} ${CoR21} ${CoR22}
+
+fix 		m4 all property/global coefficientFriction peratomtypepair ${natoms} ${sf11} ${sf12} ${sf21} ${sf22}
+
+fix 		m5 all property/global coefficientRollingFriction peratomtypepair ${natoms} ${rf11} ${rf12} ${rf21} ${rf22}
+
+###################################Generation and Loading of the Geometry .stl#######################################
+
+fix			Box 	all mesh/surface file LiggghtsDomain.stl 	type 2  scale 1 curvature_tolerant yes		
+
+fix 		walls 	all wall/gran model hertz tangential history rolling_friction epsd2 mesh n_meshes 1 meshes Box
+
+
+###################################Generation and Insertion of the particles#########################################
+create_atoms 1 single -0.00048 0.19642 -0.02459 units box
+create_atoms 1 single -0.00420 0.13298 0.01203 units box
+create_atoms 1 single -0.01624 0.31781 0.00800 units box
+create_atoms 1 single 0.01379 0.12281 0.02207 units box
+create_atoms 1 single -0.00461 0.22887 0.01386 units box
+create_atoms 1 single -0.00946 0.34843 0.01473 units box
+create_atoms 1 single 0.00927 0.31740 0.00064 units box
+create_atoms 1 single -0.00884 0.25278 0.02061 units box
+create_atoms 1 single -0.02110 0.28056 0.02677 units box
+create_atoms 1 single 0.00578 0.17150 0.00094 units box
+create_atoms 1 single 0.01624 0.27460 -0.01572 units box #10
+
+create_atoms 1 single 0.00063 0.06543 0.01715 units box
+create_atoms 1 single -0.00680 0.14916 -0.00489 units box
+create_atoms 1 single -0.00339 0.06987 -0.00784 units box
+create_atoms 1 single 0.02151 0.35578 0.00530 units box
+create_atoms 1 single 0.00950 0.13493 -0.02521 units box
+create_atoms 1 single 0.01477 0.14345 0.01984 units box
+create_atoms 1 single -0.01414 0.23900 -0.02487 units box
+create_atoms 1 single -0.00119 0.10354 -0.01825 units box
+create_atoms 1 single -0.01781 0.07389 0.00907 units box
+create_atoms 1 single 0.01896 0.11944 0.00036 units box #20
+
+create_atoms 1 single -0.02095 0.03828 -0.01233 units box
+create_atoms 1 single 0.01583 0.04153 0.01211 units box
+create_atoms 1 single 0.00358 0.24925 -0.01184 units box
+create_atoms 1 single 0.01742 0.23777 0.00923 units box
+create_atoms 1 single 0.02471 0.25800 0.01672 units box
+create_atoms 1 single 0.00225 0.31975 0.02448 units box
+create_atoms 1 single 0.01926 0.20480 0.01552 units box
+create_atoms 1 single 0.00632 0.27664 0.02458 units box
+create_atoms 1 single -0.02609 0.09027 -0.01040 units box
+create_atoms 1 single -0.01847 0.28882 -0.01203 units box #30
+
+create_atoms 1 single -0.02599 0.29560 0.01399 units box
+create_atoms 1 single 0.00577 0.26405 0.00230 units box
+create_atoms 1 single 0.00165 0.04624 -0.01624 units box
+create_atoms 1 single -0.00904 0.09806 0.02356 units box
+create_atoms 1 single -0.01814 0.19540 0.01985 units box
+create_atoms 1 single 0.02674 0.21634 -0.00795 units box
+create_atoms 1 single 0.00325 0.17102 0.02225 units box
+create_atoms 1 single 0.02317 0.34062 -0.01042 units box
+create_atoms 1 single -0.00094 0.36166 -0.00744 units box
+create_atoms 1 single 0.02590 0.08479 -0.02007 units box #40
+
+create_atoms 1 single -0.01436 0.21057 -0.00303 units box
+create_atoms 1 single 0.00374 0.28817 -0.00017 units box
+create_atoms 1 single 0.00771 0.09843 0.00284 units box
+create_atoms 1 single -0.02320 0.11920 0.00444 units box
+create_atoms 1 single -0.01651 0.16958 -0.01742 units box
+create_atoms 1 single 0.01308 0.15319 -0.01452 units box
+create_atoms 1 single -0.01779 0.13687 -0.02211 units box
+create_atoms 1 single 0.00494 0.29864 0.02459 units box
+create_atoms 1 single -0.01569 0.26113 -0.01544 units box
+create_atoms 1 single -0.02250 0.10874 -0.02191 units box #50
+
+create_atoms 1 single -0.01586 0.33442 -0.02144 units box
+create_atoms 1 single 0.01829 0.06266 -0.00546 units box
+create_atoms 1 single -0.02469 0.19897 -0.02662 units box
+create_atoms 1 single -0.01599 0.14734 0.02527 units box
+create_atoms 1 single -0.02616 0.17113 0.00048 units box
+create_atoms 1 single -0.01188 0.04742 0.01153 units box
+create_atoms 1 single 0.00941 0.17617 -0.02160 units box
+create_atoms 1 single 0.00311 0.19512 -0.00226 units box
+create_atoms 1 single 0.00163 0.21851 -0.02166 units box
+create_atoms 1 single -0.02630 0.35916 -0.01589 units box #60
+
+create_atoms 1 single -0.02081 0.30641 -0.02207 units box
+create_atoms 1 single -0.02155 0.26700 0.00381 units box
+create_atoms 1 single 0.01659 0.35849 -0.01983 units box
+create_atoms 1 single -0.02250 0.22206 0.02057 units box
+create_atoms 1 single 0.02561 0.05526 -0.02298 units box
+create_atoms 1 single 0.02377 0.25355 -0.00494 units box
+create_atoms 1 single 0.02591 0.18953 -0.00682 units box
+create_atoms 1 single -0.02527 0.14379 0.00257 units box
+create_atoms 1 single 0.02185 0.10372 -0.01366 units box
+create_atoms 1 single -0.00201 0.33725 -0.00087 units box #70
+
+create_atoms 1 single 0.02400 0.29282 0.01194 units box
+create_atoms 1 single 0.02468 0.10131 0.02303 units box
+create_atoms 1 single -0.02540 0.34278 -0.00015 units box
+create_atoms 1 single 0.02304 0.30957 -0.01282 units box
+create_atoms 1 single -0.01817 0.16763 0.02319 units box
+create_atoms 1 single -0.00254 0.34914 -0.02588 units box
+create_atoms 1 single -0.02433 0.36176 0.02047 units box
+create_atoms 1 single 0.02571 0.16676 0.00847 units box
+create_atoms 1 single 0.02534 0.32632 0.00908 units box
+create_atoms 1 single -0.02456 0.06221 -0.01027 units box #80
+
+create_atoms 1 single 0.00186 0.07737 -0.02628 units box
+create_atoms 1 single -0.02610 0.08607 0.02530 units box
+create_atoms 1 single 0.02348 0.07795 0.02515 units box
+create_atoms 1 single -0.00229 0.11634 -0.00048 units box
+create_atoms 1 single 0.02169 0.18520 0.02412 units box
+create_atoms 1 single -0.02346 0.23827 0.00389 units box
+create_atoms 1 single 0.02012 0.23252 -0.02326 units box
+create_atoms 1 single -0.00261 0.31920 -0.02057 units box
+create_atoms 1 single -0.01678 0.18757 -0.00815 units box
+create_atoms 1 single 0.01905 0.34697 0.02575 units box #90
+
+create_atoms 1 single -0.01573 0.11887 0.02427 units box
+create_atoms 1 single 0.02484 0.30848 0.02489 units box
+create_atoms 1 single -0.00094 0.20927 0.02480 units box
+create_atoms 1 single -0.02325 0.07595 -0.02530 units box
+create_atoms 1 single -0.02527 0.03841 0.02439 units box
+create_atoms 1 single -0.02178 0.33158 0.02665 units box
+create_atoms 1 single 0.00457 0.29474 -0.01937 units box
+create_atoms 1 single 0.02623 0.20245 -0.02649 units box
+create_atoms 1 single -0.02027 0.21975 -0.02087 units box #99
+set atom 1 diameter 0.0200 density 5000 vx 0.00000 vy 0.00000 vz 0.00000
+set atom 2 diameter 0.0200 density 5000 vx 0.00000 vy 0.00000 vz 0.00000
+set atom 3 diameter 0.0200 density 5000 vx 0.00000 vy 0.00000 vz 0.00000
+set atom 4 diameter 0.0200 density 5000 vx 0.00000 vy 0.00000 vz 0.00000
+set atom 5 diameter 0.0200 density 5000 vx 0.00000 vy 0.00000 vz 0.00000
+set atom 6 diameter 0.0200 density 5000 vx 0.00000 vy 0.00000 vz 0.00000
+set atom 7 diameter 0.0200 density 5000 vx 0.00000 vy 0.00000 vz 0.00000
+set atom 8 diameter 0.0200 density 5000 vx 0.00000 vy 0.00000 vz 0.00000
+set atom 9 diameter 0.0200 density 5000 vx 0.00000 vy 0.00000 vz 0.00000
+set atom 10 diameter 0.0200 density 5000 vx 0.00000 vy 0.00000 vz 0.00000
+set atom 11 diameter 0.0200 density 5000 vx 0.00000 vy 0.00000 vz 0.00000
+set atom 12 diameter 0.0200 density 5000 vx 0.00000 vy 0.00000 vz 0.00000
+set atom 13 diameter 0.0200 density 5000 vx 0.00000 vy 0.00000 vz 0.00000
+set atom 14 diameter 0.0200 density 5000 vx 0.00000 vy 0.00000 vz 0.00000
+set atom 15 diameter 0.0200 density 5000 vx 0.00000 vy 0.00000 vz 0.00000
+set atom 16 diameter 0.0200 density 5000 vx 0.00000 vy 0.00000 vz 0.00000
+set atom 17 diameter 0.0200 density 5000 vx 0.00000 vy 0.00000 vz 0.00000
+set atom 18 diameter 0.0200 density 5000 vx 0.00000 vy 0.00000 vz 0.00000
+set atom 19 diameter 0.0200 density 5000 vx 0.00000 vy 0.00000 vz 0.00000
+set atom 20 diameter 0.0200 density 5000 vx 0.00000 vy 0.00000 vz 0.00000
+set atom 21 diameter 0.0200 density 5000 vx 0.00000 vy 0.00000 vz 0.00000
+set atom 22 diameter 0.0200 density 5000 vx 0.00000 vy 0.00000 vz 0.00000
+set atom 23 diameter 0.0200 density 5000 vx 0.00000 vy 0.00000 vz 0.00000
+set atom 24 diameter 0.0200 density 5000 vx 0.00000 vy 0.00000 vz 0.00000
+set atom 25 diameter 0.0200 density 5000 vx 0.00000 vy 0.00000 vz 0.00000
+set atom 26 diameter 0.0200 density 5000 vx 0.00000 vy 0.00000 vz 0.00000
+set atom 27 diameter 0.0200 density 5000 vx 0.00000 vy 0.00000 vz 0.00000
+set atom 28 diameter 0.0200 density 5000 vx 0.00000 vy 0.00000 vz 0.00000
+set atom 29 diameter 0.0200 density 5000 vx 0.00000 vy 0.00000 vz 0.00000
+set atom 30 diameter 0.0200 density 5000 vx 0.00000 vy 0.00000 vz 0.00000
+set atom 31 diameter 0.0200 density 5000 vx 0.00000 vy 0.00000 vz 0.00000
+set atom 32 diameter 0.0200 density 5000 vx 0.00000 vy 0.00000 vz 0.00000
+set atom 33 diameter 0.0200 density 5000 vx 0.00000 vy 0.00000 vz 0.00000
+set atom 34 diameter 0.0200 density 5000 vx 0.00000 vy 0.00000 vz 0.00000
+set atom 35 diameter 0.0200 density 5000 vx 0.00000 vy 0.00000 vz 0.00000
+set atom 36 diameter 0.0200 density 5000 vx 0.00000 vy 0.00000 vz 0.00000
+set atom 37 diameter 0.0200 density 5000 vx 0.00000 vy 0.00000 vz 0.00000
+set atom 38 diameter 0.0200 density 5000 vx 0.00000 vy 0.00000 vz 0.00000
+set atom 39 diameter 0.0200 density 5000 vx 0.00000 vy 0.00000 vz 0.00000
+set atom 40 diameter 0.0200 density 5000 vx 0.00000 vy 0.00000 vz 0.00000
+set atom 41 diameter 0.0200 density 5000 vx 0.00000 vy 0.00000 vz 0.00000
+set atom 42 diameter 0.0200 density 5000 vx 0.00000 vy 0.00000 vz 0.00000
+set atom 43 diameter 0.0200 density 5000 vx 0.00000 vy 0.00000 vz 0.00000
+set atom 44 diameter 0.0200 density 5000 vx 0.00000 vy 0.00000 vz 0.00000
+set atom 45 diameter 0.0200 density 5000 vx 0.00000 vy 0.00000 vz 0.00000
+set atom 46 diameter 0.0200 density 5000 vx 0.00000 vy 0.00000 vz 0.00000
+set atom 47 diameter 0.0200 density 5000 vx 0.00000 vy 0.00000 vz 0.00000
+set atom 48 diameter 0.0200 density 5000 vx 0.00000 vy 0.00000 vz 0.00000
+set atom 49 diameter 0.0200 density 5000 vx 0.00000 vy 0.00000 vz 0.00000
+set atom 50 diameter 0.0200 density 5000 vx 0.00000 vy 0.00000 vz 0.00000
+set atom 51 diameter 0.0200 density 5000 vx 0.00000 vy 0.00000 vz 0.00000
+set atom 52 diameter 0.0200 density 5000 vx 0.00000 vy 0.00000 vz 0.00000
+set atom 53 diameter 0.0200 density 5000 vx 0.00000 vy 0.00000 vz 0.00000
+set atom 54 diameter 0.0200 density 5000 vx 0.00000 vy 0.00000 vz 0.00000
+set atom 55 diameter 0.0200 density 5000 vx 0.00000 vy 0.00000 vz 0.00000
+set atom 56 diameter 0.0200 density 5000 vx 0.00000 vy 0.00000 vz 0.00000
+set atom 57 diameter 0.0200 density 5000 vx 0.00000 vy 0.00000 vz 0.00000
+set atom 58 diameter 0.0200 density 5000 vx 0.00000 vy 0.00000 vz 0.00000
+set atom 59 diameter 0.0200 density 5000 vx 0.00000 vy 0.00000 vz 0.00000
+set atom 60 diameter 0.0200 density 5000 vx 0.00000 vy 0.00000 vz 0.00000
+set atom 61 diameter 0.0200 density 5000 vx 0.00000 vy 0.00000 vz 0.00000
+set atom 62 diameter 0.0200 density 5000 vx 0.00000 vy 0.00000 vz 0.00000
+set atom 63 diameter 0.0200 density 5000 vx 0.00000 vy 0.00000 vz 0.00000
+set atom 64 diameter 0.0200 density 5000 vx 0.00000 vy 0.00000 vz 0.00000
+set atom 65 diameter 0.0200 density 5000 vx 0.00000 vy 0.00000 vz 0.00000
+set atom 66 diameter 0.0200 density 5000 vx 0.00000 vy 0.00000 vz 0.00000
+set atom 67 diameter 0.0200 density 5000 vx 0.00000 vy 0.00000 vz 0.00000
+set atom 68 diameter 0.0200 density 5000 vx 0.00000 vy 0.00000 vz 0.00000
+set atom 69 diameter 0.0200 density 5000 vx 0.00000 vy 0.00000 vz 0.00000
+set atom 70 diameter 0.0200 density 5000 vx 0.00000 vy 0.00000 vz 0.00000
+set atom 71 diameter 0.0200 density 5000 vx 0.00000 vy 0.00000 vz 0.00000
+set atom 72 diameter 0.0200 density 5000 vx 0.00000 vy 0.00000 vz 0.00000
+set atom 73 diameter 0.0200 density 5000 vx 0.00000 vy 0.00000 vz 0.00000
+set atom 74 diameter 0.0200 density 5000 vx 0.00000 vy 0.00000 vz 0.00000
+set atom 75 diameter 0.0200 density 5000 vx 0.00000 vy 0.00000 vz 0.00000
+set atom 76 diameter 0.0200 density 5000 vx 0.00000 vy 0.00000 vz 0.00000
+set atom 77 diameter 0.0200 density 5000 vx 0.00000 vy 0.00000 vz 0.00000
+set atom 78 diameter 0.0200 density 5000 vx 0.00000 vy 0.00000 vz 0.00000
+set atom 79 diameter 0.0200 density 5000 vx 0.00000 vy 0.00000 vz 0.00000
+set atom 80 diameter 0.0200 density 5000 vx 0.00000 vy 0.00000 vz 0.00000
+set atom 81 diameter 0.0200 density 5000 vx 0.00000 vy 0.00000 vz 0.00000
+set atom 82 diameter 0.0200 density 5000 vx 0.00000 vy 0.00000 vz 0.00000
+set atom 83 diameter 0.0200 density 5000 vx 0.00000 vy 0.00000 vz 0.00000
+set atom 84 diameter 0.0200 density 5000 vx 0.00000 vy 0.00000 vz 0.00000
+set atom 85 diameter 0.0200 density 5000 vx 0.00000 vy 0.00000 vz 0.00000
+set atom 86 diameter 0.0200 density 5000 vx 0.00000 vy 0.00000 vz 0.00000
+set atom 87 diameter 0.0200 density 5000 vx 0.00000 vy 0.00000 vz 0.00000
+set atom 88 diameter 0.0200 density 5000 vx 0.00000 vy 0.00000 vz 0.00000
+set atom 89 diameter 0.0200 density 5000 vx 0.00000 vy 0.00000 vz 0.00000
+set atom 90 diameter 0.0200 density 5000 vx 0.00000 vy 0.00000 vz 0.00000
+set atom 91 diameter 0.0200 density 5000 vx 0.00000 vy 0.00000 vz 0.00000
+set atom 92 diameter 0.0200 density 5000 vx 0.00000 vy 0.00000 vz 0.00000
+set atom 93 diameter 0.0200 density 5000 vx 0.00000 vy 0.00000 vz 0.00000
+set atom 94 diameter 0.0200 density 5000 vx 0.00000 vy 0.00000 vz 0.00000
+set atom 95 diameter 0.0200 density 5000 vx 0.00000 vy 0.00000 vz 0.00000
+set atom 96 diameter 0.0200 density 5000 vx 0.00000 vy 0.00000 vz 0.00000
+set atom 97 diameter 0.0200 density 5000 vx 0.00000 vy 0.00000 vz 0.00000
+set atom 98 diameter 0.0200 density 5000 vx 0.00000 vy 0.00000 vz 0.00000
+set atom 99 diameter 0.0200 density 5000 vx 0.00000 vy 0.00000 vz 0.00000
+set atom 100 diameter 0.0200 density 5000 vx 0.00000 vy 0.00000 vz 0.00000
+###################################Dumping of the data for post-processing to visualize############################
+
+shell 	mkdir post
+
+#Definition of the dumptime
+
+variable writeTime equal 0.01	# Every 0.05 s 1 image 
+
+variable writeSteps equal ${writeTime}/${dt}	#Transform to iteration steps
+
+thermo 500  # print system energy every n steps
+
+dump	dmpparticle all custom/vtk ${writeSteps} post/particles_Res_*.vtk id type x y z vx vy vz fx fy fz omegax omegay omegaz radius mass
+
+####################################RUN the simulation filling###########################################################
+
+run	 ${runSteps}
+
+

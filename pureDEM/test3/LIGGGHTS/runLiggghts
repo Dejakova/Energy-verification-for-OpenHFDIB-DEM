@@ -1,0 +1,5 @@
+#!/bin/bash
+# LIGGGHTS software download and compiled from gitHub 
+# source https://github.com/CFDEMproject/LIGGGHTS-PUBLIC.git
+
+liggghts -in input.liggghts
