@@ -14,7 +14,7 @@ Usage
 -----------------
 For simulation setup and execution, please refer to the official OpenHFDIB-DEM repository.
 
-Once a simulation has completed, you run verification using:
+Once a simulation has completed, run verification using:
 
 * python3 evaluateSimulationCompleteData.py
 
