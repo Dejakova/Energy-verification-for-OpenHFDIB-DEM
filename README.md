@@ -1,8 +1,10 @@
 # Energy-verification-for-OpenHFDIB-DEM
 
-This repository contains a series of test cases with a verification tool developed for evaluating energy conservation in CFD-DEM simulations using open-source OpenHFDIB-DEM (https://github.com/techMathGroup/openHFDIB-DEM) solver.
+This repository contains a series of test cases with a verification tool developed for evaluating energy conservation in CFD-DEM simulations using open-source OpenHFDIB-DEM (https://github.com/techMathGroup/openHFDIB-DEM) project.
 
-The solver is based on OpenFOAM (https://openfoam.org), combining Computational Fluid Dynamics (CFD) and the Discrete Element Method (DEM) with a Hybrid Fictitious Domain-Immersed Boundary (HFDIB) approach.
+The project is based on OpenFOAMv8 (https://openfoam.org), combining Computational Fluid Dynamics (CFD) and the Discrete Element Method (DEM) with a Hybrid Fictitious Domain-Immersed Boundary (HFDIB) approach.
+
+In pure DEM, results from openHFDIB-DEM can be compared with simulations performed using the open-source DEM solver LIGGGHTS (https://github.com/CFDEMproject/LIGGGHTS-PUBLIC).
 
 Code capabilities
 -----------------
